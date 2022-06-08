@@ -1,7 +1,7 @@
 ﻿open System.Collections.Generic
 open System
 open System.Linq
-open word
+open wordFunctions
 
 
 // For more information see https://aka.ms/fsharp-console-apps
@@ -77,10 +77,8 @@ let rec parse (morse:string) (result:string)=
                 (parse morse1[4.. length-1] (result1+string letter)) 
             |_-> ""
 
-    match anyWordsContains result with
-        | false-> ""
-        | true->
-            match length with
+    let startCheck result morse=
+        match length with
                 | 0 -> verifyWord result
                 | 1-> check1 morse result
                 | 2-> 
@@ -98,6 +96,12 @@ let rec parse (morse:string) (result:string)=
                     let c =check3 morse result
                     let d= check4 morse result
                     a+b+c+d
+    match (resultLen ) with
+        | (4)-> match (verifyWordLite result) with
+            |true-> startCheck result morse
+            |_ -> ""
+        | _-> startCheck result morse
+            
 
 
  
@@ -106,9 +110,13 @@ let rec parse (morse:string) (result:string)=
 let convertToMorse word=
     String.collect (fun elem->( lettersToMorse.Item elem)) word
 
-let kurt2= List.fold (fun acc elem->(
+let kurt2= Array.Parallel.map (fun elem->(
         let morse=convertToMorse elem
         let result=parse morse ""
-        Console.WriteLine result
-        if ((result.Split " ").Length=5 )then result else acc))  "start " wordList[0..100]
+        //Console.WriteLine (result.Split " ").Length
+        if ((result.Split " ").Length>(9) ) then 
+            Console.WriteLine result |>ignore
+        else 
+            () 
+        elem))  wordArray[0..2000]
 Console.WriteLine kurt2

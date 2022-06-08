@@ -1,8 +1,8 @@
 ﻿module word
 
-open System.Collections.Generic
 
-    let words="aa
+
+let words="aa
 aah
 aahed
 aahing
@@ -172825,20 +172825,6 @@ zymurgies
 zymurgy
 zyzzyva
 zyzzyvas"
-    let wordArray= words.Split "\r\n"
-    let wordList= List.ofArray wordArray
-    let wordHash=HashSet<string>(wordList)
-    let dict
 
-    let anyWordsContains (letters:string)=
-    //    wordHash.exists (fun (a: string)->(a.StartsWith letters)) wordHash
-        true
 
-    let verifyWord (word:string)=
-        let exists=wordHash.Contains word 
-        if exists then 
-            word+" "
-        else
-            ""
-        
 
